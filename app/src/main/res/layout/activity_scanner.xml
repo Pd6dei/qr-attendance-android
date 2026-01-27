@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- CAMERA PREVIEW -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- QR SCANNING FRAME (optional visual guide) -->
+    <View
+        android:id="@+id/qrFrame"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center"
+        android:background="@drawable/qr_frame"/>
+
+    <!-- PROGRESS LOADER (optional) -->
+    <ProgressBar
+        android:id="@+id/scanLoader"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+</FrameLayout>
