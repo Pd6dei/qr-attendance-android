@@ -2,6 +2,7 @@ package com.example.qrverificationapp.data
 
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.GET
 
 interface ApiService {
 
@@ -15,8 +16,19 @@ interface ApiService {
         @Body request: QrRequest
     ): QrResponse
 
-    @POST("qrAttendance/markAttendance.htm")
-    suspend fun markAttendance(
+   // @POST("qrAttendance/markAttendance.htm")
+   // suspend fun markAttendance(
+       // @Body request: VerifyRequest
+   // ): QrResponse
+
+    @POST("qrAttendance/verifyAttendance.htm")
+    suspend fun verifyAttendance(
         @Body request: VerifyRequest
-    ): QrResponse
+    ): VerifyResponse
+
+    @POST("qrAttendance/unverifyAttendance.htm")
+    suspend fun unverifyAttendance(
+        @Body request: VerifyRequest
+    ): VerifyResponse
+
 }

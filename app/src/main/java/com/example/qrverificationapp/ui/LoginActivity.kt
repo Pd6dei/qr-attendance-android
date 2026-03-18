@@ -11,6 +11,7 @@ import com.example.qrverificationapp.R
 import com.example.qrverificationapp.data.QrRequest
 import com.example.qrverificationapp.data.QrResponse
 import com.example.qrverificationapp.data.RetrofitClient
+import com.example.qrverificationapp.data.SessionManager
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etUsername: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
+    private lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,10 @@ class LoginActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
 
+        session = SessionManager(this)
+
         btnLogin.setOnClickListener {
+
             val username = etUsername.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
@@ -46,8 +51,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(username: String, password: String) {
+
         lifecycleScope.launch {
             try {
+
                 val request = QrRequest(
                     userName = username,
                     password = password
@@ -58,16 +65,11 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.status == "OK") {
 
-                    // ✅ Save session
-                    getSharedPreferences("APP_SESSION", MODE_PRIVATE)
-                        .edit()
-                        .putString("USER_NAME", username)
-                        .apply()
+                    // ✅ Save username in session (production way)
+                    session.saveUser(username)
 
-                    // ✅ PASS USERNAME TO SCANNER
                     val intent =
-                        Intent(this@LoginActivity, ScannerActivity::class.java)
-                    intent.putExtra("USER_NAME", username)
+                        Intent(this@LoginActivity, AttendanceTypeActivity::class.java)
                     startActivity(intent)
 
                     finish()
@@ -80,14 +82,24 @@ class LoginActivity : AppCompatActivity() {
                     ).show()
                 }
 
-            } catch (e: Exception) {
+            }catch (e: Exception) {
                 e.printStackTrace()
+
                 Toast.makeText(
                     this@LoginActivity,
-                    "Server not reachable. Check network or IP.",
+                    "ERROR TYPE: ${e.javaClass.simpleName}\nMESSAGE: ${e.message}",
                     Toast.LENGTH_LONG
                 ).show()
             }
+
+          //  catch (e: Exception) {
+          //      e.printStackTrace()
+          //      Toast.makeText(
+           //         this@LoginActivity,
+           //         "Server not reachable. Check network or IP.",
+            //        Toast.LENGTH_LONG
+            //    ).show()
+          //  }
         }
     }
 }

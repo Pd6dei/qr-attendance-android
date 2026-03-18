@@ -7,23 +7,25 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <!-- QR SCANNING FRAME (optional visual guide) -->
-    <View
-        android:id="@+id/qrFrame"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_gravity="center"
-        android:background="@drawable/qr_frame"/>
+    <!-- CUSTOM SCANNER OVERLAY (replaces qrFrame view) -->
+    <com.example.qrverificationapp.ui.ScannerOverlayView
+        android:id="@+id/overlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <!-- PROGRESS LOADER (optional) -->
+    <!-- PROGRESS LOADER -->
     <ProgressBar
         android:id="@+id/scanLoader"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:background="#80000000"
+        android:indeterminateTint="@android:color/holo_blue_light"/>
+
+
 
 </FrameLayout>
